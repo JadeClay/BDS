@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import HeaderNavContent from "../header/HeaderNavContent";
+import Image from "next/image";
 
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
@@ -32,7 +33,7 @@ const Header = () => {
             <div className="logo-box">
               <div className="logo">
                 <Link href="/">
-                  <img src="/images/logo-2.svg" alt="brand" />
+                  <Image src="/images/logo.png" alt="brand" height={40} width={50}/>
                 </Link>
               </div>
             </div>
