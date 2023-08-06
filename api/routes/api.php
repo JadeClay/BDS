@@ -20,7 +20,11 @@ use App\Models\User;
 |
 */
 
-// Search for the user, and compare the given information, then it creates a Bearer Token to authenticate all the request made to the API.
+/* 
+    POST - LOGIN
+    Search for the user, and compare the given information, 
+    then it creates a Bearer Token to authenticate all the request made to the API.
+*/
 Route::post('/login', function (Request $request) {
 
     $info = [
@@ -43,6 +47,10 @@ Route::post('/login', function (Request $request) {
 
 });
 
+/* 
+    GET - GENERAL INFORMATION
+    Endpoints to get all information saved in the tables of the database.
+*/
 Route::get('/provinces', function (Request $request){
     return Province::all();
 });
@@ -59,41 +67,10 @@ Route::get('/business/public',function(Request $request){
     return Business::where('status',1)->get();
 });
 
-Route::get('/business/list/{status}',function(Request $request, string $status){
-    switch ($status) {
-        case '0':
-            return Business::where('status','=',0)->paginate(5);
-        case '1':
-            return Business::where('status', '=', 1)->paginate(5);
-        case '2':
-            return Business::where('status', '=', 2)->paginate(5);
-        default:
-            return Business::paginate(5);
-    }
-});
-
-// Handles the search by category
-Route::get('/business/search/category/{category}',function(Request $request, string $category){
-    try{
-        return Business::whereHas('categories', function ($query) use($category){
-            $query->where('business_category.category_id',$category);
-        })->where('status',1)->paginate(5);
-    }catch(\Throwable $th){
-        return $th;
-    }
-
-});
-
-// Handles the search ALL and the search by text
-Route::get('/business/search/{searchString}',function(Request $request, string $searchString){
-    
-    if($searchString != "1"){
-        return Business::search($searchString)->where('status',1)->paginate(5);
-    }
-    
-    return Business::where('status',1)->paginate(5);
-});
-
+/* 
+    GET - SPECIFIC BUSINESS 
+    Endpoints to get the information of an specific business, by an ID
+*/
 Route::get('/business/{id}',function(Request $request, string $id){
     $businesses = Business::all();
 
@@ -107,6 +84,66 @@ Route::get('/business/category/{id}',function(Request $request,string $id){;
     return $result;
 });
 
+Route::get('/business/photos/{id}',function(Request $request, string $id){
+    try{
+        $business = Business::find($id);
+        return $business->photos;
+    }catch(\Throwable $th){
+        return $th;
+    }
+});
+
+/* 
+    INDEXING BUSINESS BY STATUS (FOR DASHBOARD TABLE)
+    0 - Pending approval
+    1 - Approved
+    2 - Rejected
+*/
+Route::get('/business/list/{status}',function(Request $request, string $status){
+    switch ($status) {
+        case '0':
+            return Business::where('status','=',0)->paginate(5);
+        case '1':
+            return Business::where('status', '=', 1)->paginate(5);
+        case '2':
+            return Business::where('status', '=', 2)->paginate(5);
+        default:
+            return Business::paginate(5);
+    }
+});
+
+/* 
+    SEARCH BUSINESS BY CATEGORY
+    Retrieve every business that has the specific category in the database
+*/
+Route::get('/business/search/category/{category}',function(Request $request, string $category){
+    try{
+        return Business::whereHas('categories', function ($query) use($category){
+            $query->where('business_category.category_id',$category);
+        })->where('status',1)->paginate(5);
+    }catch(\Throwable $th){
+        return $th;
+    }
+
+});
+
+/* 
+    SEARCH BUSINESS BY TEXT
+    Uses Laravel Scout to retrieve the businesses that contains the search string in their names or descriptions
+*/
+Route::get('/business/search/{searchString}',function(Request $request, string $searchString){
+    
+    if($searchString != "1"){
+        return Business::search($searchString)->where('status',1)->paginate(5);
+    }
+    
+    return Business::where('status',1)->paginate(5);
+});
+
+/* 
+    MANAGEMENT OF BUSINESS 
+    Endpoints to edit, and manage the businesses created in the database
+*/
 Route::middleware('auth:sanctum')->post('/business/reject/{id}',function(Request $request, string $id){
     try {
         $business = Business::find($id);
@@ -125,15 +162,6 @@ Route::middleware('auth:sanctum')->post('/business/approve/{id}',function(Reques
         $business->save();
         return $business;
     } catch (\Throwable $th) {
-        return $th;
-    }
-});
-
-Route::get('/business/photos/{id}',function(Request $request, string $id){
-    try{
-        $business = Business::find($id);
-        return $business->photos;
-    }catch(\Throwable $th){
         return $th;
     }
 });
@@ -203,6 +231,10 @@ Route::middleware('auth:sanctum')->post('/business/edit/{id}',function(Request $
     return response("Updated succesfully",204);
 });
 
+/* 
+    CREATE BUSINESS
+    Endpoint to create a new business in the database, handles photos, logo, etc.
+*/
 Route::post('/business/new',function(Request $request){
 
     // Saving the data of the new Business in the table via the Eloquent ORM
@@ -261,6 +293,10 @@ Route::post('/business/new',function(Request $request){
     return response(500);
 });
 
+/* 
+    USER
+    Retrieves data of user
+*/
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
