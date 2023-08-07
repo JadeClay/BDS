@@ -21,9 +21,9 @@ use App\Models\User;
 */
 
 /* 
-    POST - LOGIN
+    LOGIN
     Search for the user, and compare the given information, 
-    then it creates a Bearer Token to authenticate all the request made to the API.
+    then it creates a Bearer Token to authenticate all the request made to the API on protected routes by Laravel Sanctum.
 */
 Route::post('/login', function (Request $request) {
 
