@@ -22,11 +22,13 @@ export default function Profile() {
       getData();
     }, [id]);
   
+    // Getting the name of the province of the business
     const getProvince = (id) => {
       const province = provinces[id-1];
       return province.name;
     }
-  
+    
+    // Getting the categories that the business has
     const setCategoriesSelected = () => {
       let categoriesSelected = categories.map(item => item.category_id);
       let total = [];

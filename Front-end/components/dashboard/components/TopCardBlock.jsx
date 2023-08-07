@@ -7,6 +7,7 @@ const TopCardBlock = ({refresh}) => {
 
     useEffect(() =>{
         async function getData(){
+          // Gets all the businesses, and set the total of them
             const res = await axios.get("/api/business").then(response => {
               setData(response.data);
               setTotal(response.data.length);
@@ -16,6 +17,7 @@ const TopCardBlock = ({refresh}) => {
 
     },[refresh]);
 
+  // Calculates how many businesses are pending of approval
   const getPending = () => {
     let pending = 0;
     data.forEach((business) => (business.status == 0) ? pending++ : pending)
@@ -23,6 +25,7 @@ const TopCardBlock = ({refresh}) => {
     return pending;
   }
 
+  // Calculates how many businesses are approved
   const getApproved = () => {
     let approved = 0;
     data.forEach((business) =>(business.status == 1) ? approved++ : approved)
@@ -30,13 +33,15 @@ const TopCardBlock = ({refresh}) => {
     return approved;
   }
 
+  // Calculates how many businesses are rejected
   const getRejected = () => {
     let rejected = 0;
     data.forEach((business) =>(business.status == 2) ? rejected++ : rejected);
 
     return rejected;
   }
-
+  
+  // Setting the content of the cards
   const cardContent = [
     {
       id: 1,

@@ -24,6 +24,7 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 // Register the plugins
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 
+// Setting the options for the Pop-up alerts
 const successAlertOptions = {
   title:"¡Éxito!",
   text:"Solicitud realizada con éxito",
@@ -71,7 +72,10 @@ const index = (id) => {
   useEffect(() => {
     
     async function getData(){
+      // Getting the token to authenticate the request.
       setToken(Cookies.get("token")); 
+
+      // Getting all the existent information in the database
       const res = await axios.get(`/api/business/${id.id}`).then(response => (
         setName(response.data.name),
         setDescription(response.data.description),
@@ -88,6 +92,7 @@ const index = (id) => {
         setImagesArray(response.data.id),
         setUploadedLogo(response.data.logo)
       ));
+      // Getting all the provinces and categories possible
       const response = await axios.get(`/api/provinces`).then(response => setProvinces(response.data));
       let aux = []
       axios.get("/api/categories").then(response => response.data.forEach(cat => {
@@ -96,12 +101,15 @@ const index = (id) => {
           label: cat.name
         })
       }));
+
+      // Setting the possible categories
       setCategories(aux);
       const categories = await axios.get(`/api/business/category/${id.id}`).then(response => setSelectedCategories(response.data));
     }
     getData();
   },[])
 
+  // Insert all photos uploaded to the server of that business
   const setImagesArray = async (id) => {
     const response = await axios.get(`/api/business/photos/${id}`).then(response => {
       let auxImages = [];
@@ -110,6 +118,7 @@ const index = (id) => {
     }).catch(error => console.error(error));
   }
 
+  // Retrieve all the selected categories of that business
   const setCategoriesSelected = () => {
     let categoriesSelected = selectedCategories.map(item => item.category_id);
     let total = [];
@@ -163,6 +172,9 @@ const index = (id) => {
     }).then((response) => swal(successAlertOptions).then(() => router.push('/dashboard'))).catch((response) => console.log(response));
   }
 
+  /*
+    FUNCTIONS TO MANAGE THE STATUS OF THE BUSINESSES
+  */
   const approveBusiness = (e) => {
     e.preventDefault()
     axios.post(`/api/business/approve/${id.id}`,{},{

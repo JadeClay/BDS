@@ -2,24 +2,6 @@ import Router from "next/router";
 import { useEffect, useState } from "react";
 import axios from "../../lib/axios";
 
-const catOptions = [
-  { value: 0, label: "Cualquier categoría"},
-  { value: 1, label: "Salud" },
-  { value: 2, label: "Turismo" },
-  { value: 3, label: "Deportes" },
-  { value: 4, label: "Educación" },
-  { value: 5, label: "Tecnología" },
-  { value: 6, label: "Consultoría" },
-  { value: 7, label: "Gastronomia" },
-  { value: 8, label: "Construcción" },
-  { value: 9, label: "Transportación" },
-  { value: 10, label: "Sociedad y Cultura" },
-  { value: 11, label: "Medios de comunicación" },
-  { value: 12, label: "Artes y Entretenimiento" },
-  { value: 13, label: "Venta de Productos y Servicios" },
-  { value: 14, label: "Arquitectura" },
-];
-
 const SearchForm3 = () => {
   const [categories, setCategories] = useState();
   const [category, setCategory] = useState(undefined);

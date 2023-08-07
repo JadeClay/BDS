@@ -6,6 +6,7 @@ import { Pagination } from "react-laravel-paginex";
 import Cookies from "js-cookie";
 import swal from "sweetalert";
 
+// Setting the popup alerts options
 const successAlertOptions = {
   title:"¡Éxito!",
   text:"Solicitud realizada con éxito",
@@ -30,6 +31,7 @@ const JobListingsTable = ({refreshPage, refresh}) => {
 
   useEffect(() =>{
     async function getData(){
+      // Retrieve the businesses
       const res = await axios.get("/api/business/list/" + status).then(response => {
       setPage(response.data);
     }).catch(error => console.error(error));
@@ -41,20 +43,26 @@ const JobListingsTable = ({refreshPage, refresh}) => {
     getData(); 
   },[refresh]);
 
+  // Filters the businesses by its status
   const statusFilter = (e) => {
     setStatus(e.target.value);
     axios.get(`/api/business/list/${e.target.value}?page=` + 1).then(response => (setPage(response.data)))
   }
 
+  // Handles the pagination, goes changing the data
   const getPage = data => {
     axios.get(`/api/business/list/${status}?page=` + data.page).then(response => (setPage(response.data)))
   }
 
+  // Returns the name of the province of the business
   const getProvince = (id) => {
     const province = provinces[id-1];
     return province.name
   }
 
+  /*
+    FUNCTIONS TO MANAGE THE STATUS OF THE BUSINESSES
+  */
   const rejectBusiness = (id) => {
     const res = axios.post(`/api/business/reject/${id}`,{},{
       headers: {

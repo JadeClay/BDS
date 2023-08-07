@@ -14,6 +14,7 @@ export default function BusinessListItem({business, province}) {
         getData();
     },[]);
 
+    // Setting al the categories that the business has
     const setCategoriesSelected = () => {
         let categoriesSelected = categories.map(item => item.category_id);
         let total = [];

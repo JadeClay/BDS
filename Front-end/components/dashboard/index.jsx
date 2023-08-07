@@ -7,6 +7,7 @@ import CopyrightFooter from "../footer/CopyrightFooter";
 import { useState } from "react";
 
 const Index = () => {
+  // State used to trigger re-renderization when states changes in the table of businesses
   const [reload, setReload] = useState(0);
 
   return (

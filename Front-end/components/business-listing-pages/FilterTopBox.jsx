@@ -5,23 +5,6 @@ import { useRouter } from "next/router";
 import { Pagination } from "react-laravel-paginex";
 import BusinessListItem from "./BusinessListItem";
 
-const catOptions = [
-    { value: 1, label: "Salud" },
-    { value: 2, label: "Turismo" },
-    { value: 3, label: "Deportes" },
-    { value: 4, label: "Educación" },
-    { value: 5, label: "Tecnología" },
-    { value: 6, label: "Consultoría" },
-    { value: 7, label: "Gastronomia" },
-    { value: 8, label: "Construcción" },
-    { value: 9, label: "Transportación" },
-    { value: 10, label: "Sociedad y Cultura" },
-    { value: 11, label: "Medios de comunicación" },
-    { value: 12, label: "Artes y Entretenimiento" },
-    { value: 13, label: "Venta de Productos y Servicios" },
-    { value: 14, label: "Arquitectura"}
-  ];
-
 const FilterTopBox = () => {
     const router = useRouter();
     const {category, text} = router.query;
@@ -61,6 +44,7 @@ const FilterTopBox = () => {
         }
     }
 
+    // Getting the name of the province of the business
     const getProvince = (id) => {
         const province = provinces[id-1];
         return province.name;
