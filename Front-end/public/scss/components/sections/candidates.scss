@@ -702,6 +702,10 @@ Candidate Detail Section
   background-size: cover;
   background-size: cover;
   padding: 80px 0 30px;
+
+  @include media-below(lg) {
+    padding:40px 0 5px;
+  }
 }
 
 .candidate-detail-section.style-three .upper-box {
@@ -710,6 +714,10 @@ Candidate Detail Section
 
 .candidate-detail-outer {
   padding: 50px 0 50px;
+
+  @include media-below(lg) {
+    padding: 10px 0 50px;
+  }
 }
 
 /* Candidate block Five */

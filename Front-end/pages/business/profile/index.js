@@ -21,7 +21,7 @@ const CandidateSingleDynamicV1 = () => {
       {/* End MobileMenu */}
 
       <Profile/>
-      {/* <!-- Job Detail Section --> */}
+      {/* <!-- Business Detail Section --> */}
 
       <CopyrightFooter/>
       {/* <!-- End Main Footer --> */}

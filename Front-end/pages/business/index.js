@@ -19,7 +19,7 @@ const index = () => {
       <MobileMenu />
       {/* End MobileMenu */}
 
-      {/* <!-- Dashboard --> */}
+      {/* <!-- Business Form --> */}
       <section className="user-dashboard">
         <div className="dashboard-outer">
 
@@ -33,7 +33,6 @@ const index = () => {
                   <FormBusiness />
                 </div>
               </div>
-              {/* <!-- Ls widget --> */}
             </div>
           </div>
           {/* End .row */}

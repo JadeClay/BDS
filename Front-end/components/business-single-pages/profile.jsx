@@ -84,25 +84,8 @@ export default function Profile() {
         <div className="candidate-detail-outer">
           <div className="auto-container">
             <div className="row">
-              <div className="content-column col-lg-8 col-md-12 col-sm-12">
-                <div className="job-detail">
-                    <h4>Sobre la empresa</h4>
 
-                  <p style={{whiteSpace: "normal", textAlign: "justify"}}>
-                    {business?.description}
-                  </p>
-
-                  {/* <!-- Portfolio --> */}
-                  <div className="portfolio-outer">
-                    <div className="row">
-                      <GalleryBox id={business?.id} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* End .content-column */}
-
-              <div className="sidebar-column col-lg-4 col-md-12 col-sm-12">
+            <div className="sidebar-column col-lg-4 col-md-12 col-sm-12">
                 <aside className="sidebar">
                   <div className="sidebar-widget">
                     <div className="widget-content">
@@ -156,7 +139,28 @@ export default function Profile() {
                 {/* End .sidebar */}
               </div>
               {/* End .sidebar-column */}
+
+              <div className="content-column col-lg-8 col-md-12 col-sm-12">
+                <div className="job-detail">
+                    <h4>Sobre la empresa</h4>
+
+                  <p style={{whiteSpace: "normal", textAlign: "justify"}}>
+                    {business?.description}
+                  </p>
+
+                  {/* <!-- Portfolio --> */}
+                  <div className="portfolio-outer">
+                    <div className="row">
+                      <GalleryBox id={business?.id} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* End .content-column */}
+
             </div>
+
+            
           </div>
         </div>
         {/* <!-- job-detail-outer--> */}

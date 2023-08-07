@@ -8,7 +8,7 @@ import Cookies from "js-cookie";
 const index = () => {
   const router = useRouter();
 
-  // Verifying that the user is authenticated
+  // Verifying that the user is authenticated, if not, redirecting to login
   useEffect(() =>{
     if(Cookies.get('token') == undefined){
       router.push("/login");

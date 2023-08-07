@@ -9,7 +9,7 @@ const index = () => {
   const router = useRouter();
   const {id} = router.query;
 
-  // Verifying that the user is authenticated
+  // Verifying that the user is authenticated, if not, redirecting to login
   useEffect(() =>{
     if(Cookies.get('token') == undefined){
       router.push("/login");

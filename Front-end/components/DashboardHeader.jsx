@@ -5,25 +5,12 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 
 const Header = () => {
-  const [navbar, setNavbar] = useState(false);
   const router = useRouter();
 
   const LogOut = () => {
     Cookies.remove('token');
     router.push("/");
   }
-
-  const changeBackground = () => {
-    if (window.scrollY >= 10) {
-      setNavbar(true);
-    } else {
-      setNavbar(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", changeBackground);
-  }, []);
 
   return (
     // <!-- Main Header-->
@@ -38,7 +25,7 @@ const Header = () => {
             <div className="logo-box">
               <div className="logo">
                 <Link href="/">
-                  <img src="/images/logo.png" alt="brand" height={40} width={50}/>
+                  <img src="/images/logo.png" alt="brand" height={"auto"} width={45}/>
                 </Link>
               </div>
             </div>

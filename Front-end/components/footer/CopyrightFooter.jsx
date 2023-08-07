@@ -8,7 +8,7 @@ const CopyrightFooter = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Pro GPS and Technology
+          PRO GPS AND TECHNOLOGY
         </a>
         . Todos los derechos reservados.
       </p>
