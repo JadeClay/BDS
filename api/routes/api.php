@@ -255,8 +255,9 @@ Route::post('/business/new',function(Request $request){
 
         $business->status = 0; // Adding the status of PENDING REVIEW to the business
 
+        $path = '/home/mkplace/public_html/api/images'; // THIS IS FOR PRODUCTION
         $image = 'LOGO_' .$business->name . '.' . $request->file('logo')->getClientOriginalExtension(); // Generating the name for the LOGO
-        $request->file('logo')->move(public_path('images'),$image);
+        $request->file('logo')->move($path,$image); // Change path for public_path('images') when in development
 
         $business->logo = 'images/' . $image; // Saving the relative URL of the Logo to the database
         
@@ -267,7 +268,7 @@ Route::post('/business/new',function(Request $request){
             for ($i=0; $i < $quantity; $i++) { 
                 $randomId = Str::random(5);
                 $newImage = 'IMG_'.$business->name . '_' . $randomId . '.' . $request->file('image-'.$i)->getClientOriginalExtension();
-                $request->file('image-'.$i)->move(public_path('images'),$newImage);
+                $request->file('image-'.$i)->move($path,$newImage); // Change path for public_path('images') when in development
                 $imagesURL[$i] = $newImage;
             }
 

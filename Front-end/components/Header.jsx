@@ -31,7 +31,7 @@ const Header = () => {
             <div className="logo-box">
               <div className="logo">
                 <Link href="/">
-                  <img src="/images/logo.png" alt="brand" height={"auto"} width={45}/>
+                  <Image src="/images/logo.png" alt="brand" height={40} width={50}/>
                 </Link>
               </div>
             </div>

@@ -57,28 +57,28 @@ const JobListingsTable = ({refreshPage, refresh}) => {
   // Returns the name of the province of the business
   const getProvince = (id) => {
     const province = provinces[id-1];
-    return province.name
+    return province?.name
   }
 
   /*
     FUNCTIONS TO MANAGE THE STATUS OF THE BUSINESSES
   */
   const rejectBusiness = (id) => {
+    refreshPage(!refresh);
     const res = axios.post(`/api/business/reject/${id}`,{},{
       headers: {
         "Authorization": 'Bearer ' + token,
       }
     }).then(() => swal(successAlertOptions)).catch(() => swal(errorAlertOptions))
-    refreshPage(!refresh);
   }
 
   const approveBusiness = (id) => {
+    refreshPage(!refresh);
     const res = axios.post(`/api/business/approve/${id}`,{},{
       headers: {
         "Authorization": 'Bearer ' + token,
       }
     }).then(() => swal(successAlertOptions)).catch(() => swal(errorAlertOptions))
-    refreshPage(!refresh);
   }
 
   return (
@@ -112,18 +112,18 @@ const JobListingsTable = ({refreshPage, refresh}) => {
 
             <tbody>
               {page && page.data.map((item) => (
-                <tr key={item.id}>
+                <tr key={item?.id}>
                   <td>
                     {/* <!-- Job Block --> */}
                     <div className="job-block">
                       <div className="inner-box">
                         <div className="content">
                           <span className="company-logo">
-                            <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${item.logo}`} alt="logo" />
+                            <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${item?.logo}`} alt="logo" />
                           </span>
                           <h4>
-                            <Link href={`${item.website}`} target="_blank" rel="noreferrer" passHref={true}>
-                              {item.name}
+                            <Link href={`${item?.website}`} target="_blank" rel="noreferrer" passHref={true}>
+                              {item?.name}
                             </Link>
                           </h4>
                           <ul className="job-info">
@@ -133,29 +133,29 @@ const JobListingsTable = ({refreshPage, refresh}) => {
                             </li> */}
                             <li>
                               <span className="icon flaticon-map-locator"></span>
-                              {provinceLoaded && getProvince(item.province_id)}
+                              {provinceLoaded && getProvince(item?.province_id)}
                             </li>
                           </ul>
                         </div>
                       </div>
                     </div>
                   </td>
-                  <td className={(item.status == 1) ? "status approved" : (item.status == 2) ? "status rejected" : "status"}>{(item.status == 0) ? "Pendiente" : (item.status == 1) ? "Aprobada" : "Rechazada"}</td>
+                  <td className={(item?.status == 1) ? "status approved" : (item?.status == 2) ? "status rejected" : "status"}>{(item?.status == 0) ? "Pendiente" : (item?.status == 1) ? "Aprobada" : "Rechazada"}</td>
                   <td>
                     <div className="option-box">
                       <ul className="option-list">
                         <li>
-                          <button data-text="Información" onClick={() => router.push(`./dashboard/business?id=${item.id}`)}>
+                          <button data-text="Información" onClick={() => router.push(`./dashboard/business?id=${item?.id}`)}>
                             <span className="la la-eye"></span>
                           </button>
                         </li>
                         <li>
-                            <button data-text="Aprobar" onClick={() => approveBusiness(item.id)}>
+                            <button data-text="Aprobar" onClick={() => approveBusiness(item?.id)}>
                               <span className="la la-check"></span>
                             </button>
                         </li>
                         <li>
-                          <button data-text="Rechazar" onClick={() => rejectBusiness(item.id)}>
+                          <button data-text="Rechazar" onClick={() => rejectBusiness(item?.id)}>
                             <span className="la la-times-circle"></span>
                           </button>
                         </li>

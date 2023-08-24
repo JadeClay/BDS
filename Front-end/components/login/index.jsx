@@ -1,6 +1,7 @@
 import FormContent from "../common/form/login/FormContent";
 import MobileMenu from "../header/MobileMenu";
 import Header from "../Header";
+import bg from '../../public/images/wallpaper.webp'
 
 const index = () => {
   return (
@@ -14,7 +15,7 @@ const index = () => {
       <div className="login-section">
         <div
           className="image-layer"
-          style={{ backgroundImage: "url(images/wallpaper.webp)" }}
+          style={{ backgroundImage: `url(${bg.src})` }}
         ></div>
         <div className="outer-box">
           {/* <!-- Login Form --> */}

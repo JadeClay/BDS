@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
 
-const index = () => {
+const Index = () => {
   const router = useRouter();
 
   // Verifying that the user is authenticated, if not, redirecting to login
@@ -23,4 +23,4 @@ const index = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(index), { ssr: false });
+export default dynamic(() => Promise.resolve(Index), { ssr: false });

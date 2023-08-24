@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import HeaderNavContent from "./header/HeaderNavContent";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const Header = () => {
   const router = useRouter();
@@ -25,7 +25,7 @@ const Header = () => {
             <div className="logo-box">
               <div className="logo">
                 <Link href="/">
-                  <img src="/images/logo.png" alt="brand" height={"auto"} width={45}/>
+                  <Image src="/images/logo.png" alt="brand" height={40} width={50}/>
                 </Link>
               </div>
             </div>

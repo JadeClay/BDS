@@ -13,21 +13,21 @@ return new class extends Migration
     {
         Schema::create('businesses', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->longText('description')->nullable();
-            $table->foreignId('province_id')->nullable()->constrained(
+            $table->string('name');
+            $table->longText('description');
+            $table->foreignId('province_id')->constrained(
                 table: 'provinces', indexName: 'provinces_id'
             );
-            $table->text('direction')->nullable();
-            $table->text('location_link')->nullable();
-            $table->text('owner')->nullable();
-            $table->text('telephone')->nullable();
-            $table->text('cellphone')->nullable();
-            $table->text('email')->nullable();
+            $table->text('direction');
+            $table->text('location_link');
+            $table->text('owner');
+            $table->text('telephone');
+            $table->text('cellphone');
+            $table->text('email');
             $table->text('website')->nullable();
             $table->text('facebook')->nullable();
             $table->text('instagram')->nullable();
-            $table->longText('logo')->nullable();
+            $table->longText('logo');
             $table->json('photos');
             $table->tinyInteger('status');
             $table->timestamps();

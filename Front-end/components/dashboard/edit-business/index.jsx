@@ -39,7 +39,7 @@ const errorAlertOptions = {
   icon:"error"
 }
 
-const index = (id) => {
+const Index = (id) => {
   const router = useRouter();
   const [category,setCategory] = useState();
   const [categories, setCategories] = useState([]);
@@ -130,7 +130,7 @@ const index = (id) => {
     })
 
     total.forEach((data)=>{
-      string += data.label;
+      string += data?.label;
       string += " ";
     })
     
@@ -436,7 +436,7 @@ const index = (id) => {
                       <div className="form-group col-lg-12">
                         <label>Imágenes subidas</label><br/>
                         {
-                          uploadedImages && uploadedImages.map(image => <img src={image} width={100} height={140}/>)
+                          uploadedImages && uploadedImages.map(image => <img src={image} width={100} height={140} key={1}/>)
                         }
                       </div>
 
@@ -502,4 +502,4 @@ const index = (id) => {
   );
 };
 
-export default index;
+export default Index;

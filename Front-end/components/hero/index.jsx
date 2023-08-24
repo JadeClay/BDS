@@ -1,9 +1,10 @@
 import SearchForm3 from "../common/SearchForm3";
 import Partner2 from "../common/partner/Partner2";
+import bg from '../../public/images/wallpaper.webp'
 
 const index = () => {
   return (
-    <section className="banner-section-four -type-16" style={{ backgroundImage: "url(images/wallpaper.webp)", backgroundPosition: "center" }}>
+    <section className="banner-section-four -type-16" style={{ backgroundImage: `url(${bg.src})`, backgroundPosition: "center" }}>
 
       <div className="auto-container">
         <div className="content-box">

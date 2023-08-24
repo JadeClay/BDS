@@ -80,7 +80,7 @@ const Partner2 = () => {
             <figure className="image-box">
               <a href={item.link}>
                 <img
-                  src={`http://localhost:8000/${item.logo}`}
+                  src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${item.logo}`}
                   alt="brand"
                 />
               </a>
