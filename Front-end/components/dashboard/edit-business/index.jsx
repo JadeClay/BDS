@@ -169,7 +169,7 @@ const Index = (id) => {
         'Content-Type': 'multipart/form-data',
         "Authorization": 'Bearer ' + token,
       }
-    }).then((response) => swal(successAlertOptions).then(() => router.push('/dashboard'))).catch((response) => console.log(response));
+    }).then((response) => swal(successAlertOptions).then(() => router.push('/dashboard'))).catch(() => swal(errorAlertOptions));
   }
 
   /*
@@ -181,7 +181,7 @@ const Index = (id) => {
       headers: {
         "Authorization": 'Bearer ' + token,
       }
-    }).then(() => swal(successAlertOptions).then(() => router.push('/dashboard'))).catch((error) => console.log(error));
+    }).then(() => swal(successAlertOptions).then(() => router.push('/dashboard'))).catch(() => swal(errorAlertOptions));
   }
 
   const rejectBusiness = (e) => {

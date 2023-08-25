@@ -59,14 +59,18 @@ export default function BusinessListItem({business, province}) {
 
                         <ul className="candidate-info">
                             <li>
-                                <span className="icon flaticon-map-locator" style={{maxWidth: "50px"}}></span>
-                                {province && province}
+                                <a href={business?.location_link} target="_blank" rel="noreferrer" className="business link"><span className="fa fa-map-pin business" style={{marginRight: 5}}></span>{province && province}</a> 
                             </li>
                             <li>
-                                <a href={business.facebook} target="_blank" rel="noreferrer" className="business link"><span className="fab fa-facebook-f business" style={{marginRight: 5}}></span>Facebook</a>
-                                <a href={business.instagram} target="_blank" rel="noreferrer" className="business link"><span className="fab fa-instagram business" style={{marginLeft: 15, marginRight: 5}}></span>Instagram</a>
-                                <a href={business.website} target="_blank" rel="noreferrer" className="business link"><span className="fa fa-globe business" style={{marginLeft: 15, marginRight: 5}}></span>Ir a la web</a>
+                                <a href={business?.facebook} target="_blank" rel="noreferrer" className="business link"><span className="fab fa-facebook-f business" style={{marginRight: 5}}></span>Facebook</a>
                             </li>
+                            <li>
+                                <a href={business?.instagram} target="_blank" rel="noreferrer" className="business link"><span className="fab fa-instagram business" style={{ marginRight: 5}}></span>Instagram</a>
+                            </li>
+                            <li>
+                            <a href={business?.website} target="_blank" rel="noreferrer" className="business link"><span className="fa fa-globe business" style={{marginRight: 5}}></span>Ir a la web</a>
+                            </li>
+                               
                         </ul>
                         {/* End candidate-info */}
 

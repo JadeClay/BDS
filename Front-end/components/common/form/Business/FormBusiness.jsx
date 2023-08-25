@@ -141,6 +141,7 @@ const FormBusiness = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
     formData.append('category',category);
     formData.append('logo',logo);
     formData.append('name', name);
@@ -165,7 +166,8 @@ const FormBusiness = () => {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
-    }).then(response => swal(successAlertOptions).then(response => router.push("/"))).catch(error => swal(errorAlertOptions));
+    }).then(response => swal(successAlertOptions).then(() => router.push("/"))).catch(error => swal(errorAlertOptions));
+    
   }
 
   return (
@@ -178,7 +180,6 @@ const FormBusiness = () => {
             name="attachments[]"
             accept="image/*"
             id="upload"
-            required
             onChange={onLogoChange}
           />
           <label
@@ -206,7 +207,7 @@ const FormBusiness = () => {
 
           {/* <!-- Search Select --> */}
           <div className="form-group col-lg-6 col-md-12">
-            <label>Categoria de Negocio *</label>
+            <label>Categoria de Negocio (Puede seleccionar varias)*</label>
             <Select
               isMulti
               name="categories"
@@ -274,7 +275,7 @@ const FormBusiness = () => {
             <label>Correo Electronico *</label>
             <input
               type="text"
-              name="name"
+              name="email"
               placeholder="ejemplo@gmail.com"
               required
               onChange={onEmailChange}
@@ -310,12 +311,11 @@ const FormBusiness = () => {
               maxFiles={3}
               storeAsFile={true}
               credits={false}
-              required
               labelIdle={"Agregar hasta 3 imágenes"}
             />
           
           {/* <!-- Input --> */}
-          <div className="form-group col-lg-2 col-md-12">
+          <div className="form-group col-lg-2 col-md-2">
             <Link
               href="/"
               className="theme-btn btn-style-five"
@@ -325,7 +325,7 @@ const FormBusiness = () => {
           </div>
 
           {/* <!-- Input --> */}
-          <div className="form-group col-lg-2 col-md-12">
+          <div className="form-group col-lg-2 col-md-2">
             <button type="submit" className="theme-btn btn-style-one">
               Crear
             </button>

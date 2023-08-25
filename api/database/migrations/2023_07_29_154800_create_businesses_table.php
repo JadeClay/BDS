@@ -27,8 +27,8 @@ return new class extends Migration
             $table->text('website')->nullable();
             $table->text('facebook')->nullable();
             $table->text('instagram')->nullable();
-            $table->longText('logo');
-            $table->json('photos');
+            $table->longText('logo')->nullable();
+            $table->json('photos')->nullable();
             $table->tinyInteger('status');
             $table->timestamps();
         });

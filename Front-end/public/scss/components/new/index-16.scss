@@ -12,8 +12,16 @@
   padding: 0;
   height: 84vh;
 
+  @include media-below(md){
+    height: 78vh;
+  }
+
   .title-box {
-    margin-top: 160px;
+    margin-top: 20vh;
+
+    @include media-below(md) {
+      margin-top: 4vh;
+    }
 
     h4 {
       position:relative;
@@ -31,7 +39,7 @@
   }
 
   .content-box {
-    padding-top: 60px;
+    padding-top: 4vh;
     padding-bottom: 0px;
 
     @include media-below(lg) {
@@ -69,9 +77,13 @@
   
 
   .job-search-form {
-    margin: 56px auto 100px !important;
+    margin: 4vh auto 30vh !important;
     border-radius: 150px;
     max-width: 740px;
+
+    @include media-below(md){
+      margin: 4vh auto 10vh !important;
+    }
 
     .theme-btn {
       background-color: var(--primary-color);

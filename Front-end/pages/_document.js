@@ -11,11 +11,11 @@ export default function Document() {
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
         <meta
           name="keywords"
-          content="	candidates, career, employment, indeed, job board, job listing, job portal, job postings, job search, job seeker, jobs, recruiters, recruiting, recruitment, resume"
+          content="	Empresas, B2B, Directorio, Proveedores, Servicios, Negocios, Industrias, Conexiones, Catálogo, Networking"
         />
         <meta
           name="description"
-          content="Superio - Job Borad React NextJS Template"
+          content="Contacta con las mejores empresas para oportunidades de negocio"
         />
         <meta name="ibthemes" content="ATFN" />
 

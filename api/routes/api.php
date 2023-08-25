@@ -184,27 +184,32 @@ Route::middleware('auth:sanctum')->post('/business/edit/{id}',function(Request $
         $business->facebook = $request->input('facebook');
         $business->instagram = $request->input('instagram'); 
 
-
+        $path = '/home/mkplace/public_html/api/images'; // THIS IS FOR PRODUCTION
+        $deletePath = '/home/mkplace/public_html/api';
         if($request->input('logo') != "undefined"){ // Seeking if there is any change in LOGO
-            File::delete(public_path($business->logo));
+            if($business->logo != "undefined"){
+                File::delete($deletePath . $business->logo);
+            }
             $image = 'LOGO_' .$business->name . '.' . $request->file('logo')->getClientOriginalExtension(); // Generating the name for the LOGO
-            $request->file('logo')->move(public_path('images'),$image);
+            $request->file('logo')->move($path,$image);
 
             $business->logo = 'images/' . $image;   // Saving the relative URL to the database
         }
 
         if($request->input('images') != "0"){ // Seeking if there is any change in LOGO
             $cantImages = $request->input('images');
-            $savedImages = json_decode($business->photos);
-
-            foreach ($savedImages as $image) {
-                File::delete(public_path('images/'.$image));
+            
+            if($business->photos != ""){
+                $savedImages = json_decode($business->photos);
+    
+                foreach ($savedImages as $image) {
+                    File::delete($path . $image);
+                }
             }
-
             for ($i=0; $i < $cantImages; $i++) { 
                 $randomId = Str::random(5);
                 $newImage = 'IMG_'.$business->name . '_' . $randomId . '.' . $request->file('image-'.$i)->getClientOriginalExtension();
-                $request->file('image-'.$i)->move(public_path('images'),$newImage);
+                $request->file('image-'.$i)->move($path,$newImage);
                 $imagesURL[$i] = $newImage;
             }
 
@@ -255,14 +260,17 @@ Route::post('/business/new',function(Request $request){
 
         $business->status = 0; // Adding the status of PENDING REVIEW to the business
 
-        $path = '/home/mkplace/public_html/api/images'; // THIS IS FOR PRODUCTION
-        $image = 'LOGO_' .$business->name . '.' . $request->file('logo')->getClientOriginalExtension(); // Generating the name for the LOGO
-        $request->file('logo')->move($path,$image); // Change path for public_path('images') when in development
+        if ($request->input('logo') != "undefined") {
+            $path = '/home/mkplace/public_html/api/images'; // THIS IS FOR PRODUCTION
+            $image = 'LOGO_' .$business->name . '.' . $request->file('logo')->getClientOriginalExtension(); // Generating the name for the LOGO
+            $request->file('logo')->move($path,$image); // Change path for public_path('images') when in development
+    
+            $business->logo = 'images/' . $image; // Saving the relative URL of the Logo to the database
+        }
 
-        $business->logo = 'images/' . $image; // Saving the relative URL of the Logo to the database
         
         // Saving the images for the corporate profile
-        if ($request->has('images')) {
+        if ($request->input('images') != "undefined") {
             $quantity = $request->input('images');
             $imagesURL = [];
             for ($i=0; $i < $quantity; $i++) { 

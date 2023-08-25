@@ -1462,12 +1462,6 @@
 		padding: 220px 0 100px;
 	}
 
-	.banner-section-four,
-	.main-footer.style-three {
-		background: none !important;
-		background-color: #143a8f !important;
-	}
-
 	.testimonial-section-three {
 		.slide-item {
 			flex-direction: column;
@@ -1567,6 +1561,7 @@
 
 		.image {
 			position: relative;
+			left: 35%;
 			margin: 0 0 20px;
 		}
 
@@ -2379,6 +2374,7 @@
 
 	.ls-switcher .showing-result {
 		width: 100%;
+		margin-bottom: 0;
 	}
 
 	.banner-section-ten .job-search-form {

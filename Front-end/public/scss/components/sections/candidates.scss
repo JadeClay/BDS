@@ -258,9 +258,8 @@ Candidates Section Two
   left: 0;
   top: 0;
   width: 90px;
-  height: 90px;
+  height: 100%;
   overflow: hidden;
-  border-radius: 10%;
   margin: 25px auto 14px;
 }
 
@@ -301,7 +300,6 @@ Candidates Section Two
   line-height: 22px;
   color: #696969;
   font-weight: 400;
-  padding-left: 25px;
   margin-bottom: 5px;
   margin-right: 20px;
 }

@@ -76,16 +76,18 @@ const Partner2 = () => {
     <>
       <Slider {...settings} arrows={false} style={{width: '100%'}}>
         {logos && logos.map((item) => (
-          <li className="slide-item" key={item.id}>
-            <figure className="image-box">
-              <a href={item.link}>
-                <img
-                  src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${item.logo}`}
-                  alt="brand"
-                />
-              </a>
-            </figure>
-          </li>
+          item.logo && (
+            <li className="slide-item" key={item.id}>
+              <figure className="image-box">
+                <a href={item.link}>
+                  <img
+                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${item?.logo}`}
+                    alt="brand"
+                  />
+                </a>
+              </figure>
+            </li>
+          )
         ))}
       </Slider>
     </>

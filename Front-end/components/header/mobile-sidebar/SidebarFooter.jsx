@@ -9,6 +9,7 @@ const SidebarFooter = () => {
   ];
 
   return (
+    <>
     <div className="mm-add-listing mm-listitem pro-footer">
       <Link href="/business" className="theme-btn btn-style-one mm-listitem__text">
         Publica tu negocio
@@ -16,6 +17,14 @@ const SidebarFooter = () => {
       {/* job post btn */}
       {/* End .mm-listitem__text */}
     </div>
+    <div className="mm-add-listing mm-listitem pro-footer">
+        <Link href="mailto:soporte@progps.com.do" className="theme-btn btn-style-one mm-listitem__text">
+          Soporte
+        </Link>
+        {/* job post btn */}
+        {/* End .mm-listitem__text */}
+      </div>
+    </>
   );
 };
 
