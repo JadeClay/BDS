@@ -24,7 +24,6 @@ const Index = () => {
       <SidebarHeader />
       {/* End pro-header */}
 
-      <SidebarFooter />
       <ProSidebarProvider>
         <Sidebar>
           <Menu>
@@ -32,17 +31,17 @@ const Index = () => {
               className={
                 "menu-active-link"
               }
-              routerLink={<a href={"mailto:soporte@progps.com.do"} />}
+              routerLink={<Link href={"/dashboard"} />}
             >
-              Soporte
+              Empresas
             </MenuItem>
             <MenuItem
               className={
-                "menu-link"
+                "menu-active-link"
               }
-              routerLink={<Link href={"/"} />}
+              routerLink={<Link href={"/dashboard/categories"} />}
             >
-              Atrás
+              Categorías
             </MenuItem>
           </Menu>
         </Sidebar>

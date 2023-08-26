@@ -7,7 +7,6 @@ import GalleryBox from './shared-components/GalleryBox';
 export default function Profile() {
     const router = useRouter();
     const [business, setBusiness] = useState();
-    const [category, setCategory] = useState([]);
     const [categories, setCategories] = useState();
     const [provinces, setProvinces] = useState();
     const id = router.query.id;
@@ -17,7 +16,6 @@ export default function Profile() {
         const businessResponse = await axios.get(`/api/business/${id}`).then(response => setBusiness(response.data)).catch(error => console.error(error));
         const provincesResponse = await axios.get(`/api/provinces`).then(response => setProvinces(response.data)).catch(error => console.error(error));
         const categoriesResponse = await axios.get(`/api/business/category/${id}`).then(response => setCategories(response.data)).catch(error => console.error(error));
-        const resCategories = await axios.get("/api/categories").then(response => setCategory(response.data));
       }
       getData();
     }, [id]);
@@ -26,20 +24,6 @@ export default function Profile() {
     const getProvince = (id) => {
       const province = provinces[id-1];
       return province.name;
-    }
-    
-    // Getting the categories that the business has
-    const setCategoriesSelected = () => {
-      let categoriesSelected = categories.map(item => item.category_id);
-      let total = [];
-      
-      // Running all categories that are selected for the business and retrieving the respective data from the array of categories
-      categoriesSelected.forEach((cat) =>{
-        console.log(cat);
-        total.push(category.find(element => element.id == cat))
-      })
-  
-      return total
     }
 
   return (
@@ -62,7 +46,7 @@ export default function Profile() {
                   </ul>
 
                   <ul className="post-tags">
-                    {category && categories && setCategoriesSelected().map(category => <li key={category?.id}>{category?.name}</li>)}
+                    {categories && categories.map(category => <li key={category?.id}>{category?.name}</li>)}
                   </ul>
                 </div>
 

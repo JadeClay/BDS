@@ -19,7 +19,7 @@ return new class extends Migration
                 table: 'provinces', indexName: 'provinces_id'
             );
             $table->text('direction');
-            $table->text('location_link');
+            $table->text('location_link')->nullable();
             $table->text('owner');
             $table->text('telephone');
             $table->text('cellphone');

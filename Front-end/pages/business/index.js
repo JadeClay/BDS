@@ -28,7 +28,8 @@ const index = () => {
               <div className="ls-widget">
                 <div className="tabs-box">
                   <div className="widget-title">
-                    <h4>Proponer mi empresa</h4>
+                    <h4 style={{width: "100%"}}>Proponer mi empresa</h4>
+                    <p>Campos con * son obligatorios</p>
                   </div>
                   <FormBusiness />
                 </div>

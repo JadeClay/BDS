@@ -47,6 +47,45 @@ Route::post('/login', function (Request $request) {
 
 });
 
+Route::middleware('auth:sanctum')->post('/categories/delete/{id}', function(Request $request, string $id){
+    try {
+        $businesses = Category::find($id)->businesses()->get();
+    
+        foreach ($businesses as $business) {
+            $business->categories()->detach($id);
+        }
+    
+        return Category::find($id)->delete();
+    } catch (\Throwable $th) {
+        return $th;
+    }
+});
+
+Route::middleware('auth:sanctum')->post('/categories/edit/{id}', function(Request $request, string $id){
+    try {
+        $category = Category::find($id);
+        $category->name = $request->name;
+        $category->save();
+    } catch (\Throwable $th) {
+        return $th;
+    }
+
+    return response("Updated succesfully", 204);
+});
+
+Route::middleware('auth:sanctum')->post('/categories/new', function(Request $request){
+    
+    try {
+        $category = new Category;
+        $category->name =  strtoupper($request->input("name"));
+        $category->save();
+    } catch (\Throwable $th) {
+        return $th;
+    }
+
+    return response("Created sucessfully", 201);
+});
+
 /* 
     GET - GENERAL INFORMATION
     Endpoints to get all information saved in the tables of the database.
@@ -56,7 +95,11 @@ Route::get('/provinces', function (Request $request){
 });
 
 Route::get('/categories', function(Request $request){
-    return Category::all();
+    return Category::all()->sortBy('name')->values()->all();
+});
+
+Route::get('/categories/dashboard', function(Request $request){
+    return Category::orderBy('name')->paginate(5);
 });
 
 Route::get('/business',function(Request $request){
@@ -79,9 +122,8 @@ Route::get('/business/{id}',function(Request $request, string $id){
 });
 
 Route::get('/business/category/{id}',function(Request $request,string $id){;
-
-    $result = DB::table('business_category')->where('business_id',$id)->get();
-    return $result;
+    $business = Business::find($id);
+    return $business->categories;
 });
 
 Route::get('/business/photos/{id}',function(Request $request, string $id){
@@ -174,15 +216,24 @@ Route::middleware('auth:sanctum')->post('/business/edit/{id}',function(Request $
         $business->name = $request->input('name');
         $business->description = $request->input('description');
         $business->direction = $request->input('direction');
-        $business->location_link = $request->input('location_link');
+        if($request->input('location_link') != null){
+            $business->location_link = $request->input('location_link');
+        }
         $business->telephone = $request->input('telephone');
         $business->cellphone = $request->input('cellphone');
         $business->owner = $request->input('owner');
         $business->province_id = $request->input('province_id');
         $business->email = $request->input('email');
-        $business->website = $request->input('website');
-        $business->facebook = $request->input('facebook');
-        $business->instagram = $request->input('instagram'); 
+        if($request->input('website') != null && $request->input('website') != "null"){
+            $business->website = $request->input('website');
+        }
+        if($request->input('facebook') != null && $request->input('facebook') != "null"){
+            $business->facebook = $request->input('facebook');
+        }
+        if($request->input('instagram') != null && $request->input('instagram') != "null"){
+            $business->instagram = $request->input('instagram'); 
+        }
+        
 
         $path = '/home/mkplace/public_html/api/images'; // THIS IS FOR PRODUCTION
         $deletePath = '/home/mkplace/public_html/api';
@@ -203,7 +254,7 @@ Route::middleware('auth:sanctum')->post('/business/edit/{id}',function(Request $
                 $savedImages = json_decode($business->photos);
     
                 foreach ($savedImages as $image) {
-                    File::delete($path . $image);
+                    File::delete($path . "/" . $image);
                 }
             }
             for ($i=0; $i < $cantImages; $i++) { 

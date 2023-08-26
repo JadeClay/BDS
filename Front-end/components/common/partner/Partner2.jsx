@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Slider from "react-slick";
 import axios from "../../../lib/axios";
+import Link from "next/link";
 
 const Partner2 = () => {
   const [logos, setLogos] = useState([]);
@@ -61,17 +62,6 @@ const Partner2 = () => {
     ],
   };
 
-  const sliderGallery = [
-    { id: 1, link: "#", imgNumber: "1" },
-    { id: 2, link: "#", imgNumber: "2" },
-    { id: 3, link: "#", imgNumber: "3" },
-    { id: 4, link: "#", imgNumber: "4" },
-    { id: 5, link: "#", imgNumber: "5" },
-    { id: 6, link: "#", imgNumber: "6" },
-    { id: 7, link: "#", imgNumber: "7" },
-    { id: 8, link: "#", imgNumber: "5" },
-  ];
-
   return (
     <>
       <Slider {...settings} arrows={false} style={{width: '100%'}}>
@@ -79,12 +69,12 @@ const Partner2 = () => {
           item.logo && (
             <li className="slide-item" key={item.id}>
               <figure className="image-box">
-                <a href={item.link}>
+                <Link href={`/business/profile?id=${item.id}`}>
                   <img
                     src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${item?.logo}`}
                     alt="brand"
                   />
-                </a>
+                </Link>
               </figure>
             </li>
           )

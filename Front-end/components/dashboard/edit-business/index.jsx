@@ -42,7 +42,7 @@ const errorAlertOptions = {
 const Index = (id) => {
   const router = useRouter();
   const [category,setCategory] = useState();
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState();
   const [selectedCategories,setSelectedCategories] = useState();
   const [province,setProvince] = useState("");
   const [provinces,setProvinces] = useState([]);
@@ -65,6 +65,8 @@ const Index = (id) => {
   const [token, setToken] = useState();
   const [uploadedLogo, setUploadedLogo] = useState();
   const [uploadedImages, setUploadedImages] = useState();
+
+  const [loading, setLoading] = useState(false);
 
 
   // Retrieving and setting the data in the form
@@ -104,9 +106,19 @@ const Index = (id) => {
 
       // Setting the possible categories
       setCategories(aux);
-      const categories = await axios.get(`/api/business/category/${id.id}`).then(response => setSelectedCategories(response.data));
+      let catAux = []; // Cleaning the variable
+      const categories = await axios.get(`/api/business/category/${id.id}`)
+        .then(response => response.data.map(category => { 
+          catAux.push({
+            value: category.id,
+            label: category.name
+         })
+      }));
+
+      setSelectedCategories(catAux);
     }
-    getData();
+
+    getData().then(response => setLoading(true));
   },[])
 
   // Insert all photos uploaded to the server of that business
@@ -116,25 +128,6 @@ const Index = (id) => {
       response.data.forEach((image) => auxImages.push(`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${image}`));
       setUploadedImages(auxImages);
     }).catch(error => console.error(error));
-  }
-
-  // Retrieve all the selected categories of that business
-  const setCategoriesSelected = () => {
-    let categoriesSelected = selectedCategories.map(item => item.category_id);
-    let total = [];
-    let string = "";
-    
-    // Running all categories that are selected for the business and retrieving the respective data from the array of categories
-    categoriesSelected.forEach((cat) =>{
-      total.push(categories.find(element => element.value == cat));
-    })
-
-    total.forEach((data)=>{
-      string += data?.label;
-      string += " ";
-    })
-    
-    return string;
   }
 
   // Important events handlers (submit, approve, an reject)
@@ -332,16 +325,18 @@ const Index = (id) => {
 
                       {/* <!-- Search Select --> */}
                       <div className="form-group col-lg-6 col-md-12">
-                        <label>Categoria de Negocio </label>
-                        <Select
-                          isMulti
-                          name="categories"
-                          options={categories}
-                          className="basic-multi-select"
-                          classNamePrefix="select"
-                          onChange={onCategoryChange}
-                          placeholder={selectedCategories && setCategoriesSelected()}
-                        />
+                        <label>Categoría de Negocio </label>
+                        { loading && (
+                          <Select
+                            isMulti
+                            name="categories"
+                            options={categories}
+                            className="basic-multi-select"
+                            classNamePrefix="select"
+                            onChange={onCategoryChange}
+                            defaultValue={selectedCategories.map(cat => cat)}
+                          />)
+                        }
                       </div>
 
                       {/* <!-- About Company --> */}
@@ -361,13 +356,13 @@ const Index = (id) => {
 
                       {/* <!-- Input --> */}
                       <div className="form-group col-lg-5 col-md-12">
-                        <label>Direccion</label>
+                        <label>Dirección</label>
                         <input type="text" name="name" onChange={onDirectionChange} placeholder="UI Designer" required defaultValue={direction}/>
                       </div>
 
                       {/* <!-- Input --> */}
                       <div className="form-group col-lg-4 col-md-12">
-                        <label>Link Ubicacion</label>
+                        <label>Link Ubicación</label>
                         <input type="text" name="name" onChange={onLocationLinkChange} placeholder="UI Designer" defaultValue={location_link}/>
                       </div>
 
@@ -379,7 +374,7 @@ const Index = (id) => {
 
                       {/* <!-- Input --> */}
                       <div className="form-group col-lg-6 col-md-12">
-                        <label>Telefono</label>
+                        <label>Teléfono</label>
                         <input
                           type="text"
                           name="name"
@@ -398,7 +393,7 @@ const Index = (id) => {
 
                       {/* <!-- Input --> */}
                       <div className="form-group col-lg-6 col-md-12">
-                        <label>Correo Electronico</label>
+                        <label>Correo Electrónico</label>
                         <input
                           type="text"
                           name="name"
@@ -411,7 +406,7 @@ const Index = (id) => {
 
                       {/* <!-- Input --> */}
                       <div className="form-group col-lg-12 col-md-12">
-                        <label>Pagina web</label>
+                        <label>Página web</label>
                         <input
                           type="text"
                           name="name"
@@ -447,7 +442,7 @@ const Index = (id) => {
                         maxFiles={3}
                         storeAsFile={true}
                         credits={false}
-                        labelIdle={"Cambiar las imagenes"}
+                        labelIdle={"Cambiar las imágenes"}
                       />
 
                       {/* <!-- Input --> */}

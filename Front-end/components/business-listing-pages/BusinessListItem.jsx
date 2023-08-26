@@ -9,7 +9,6 @@ export default function BusinessListItem({business, province}) {
     useEffect(() => {
         async function getData(){
             const categoriesResponse = await axios.get(`/api/business/category/${business.id}`).then(response => setCategories(response.data));
-            const categoryResponse = await axios.get('/api/categories').then(response => setCategory(response.data));
         }
         getData();
     },[]);
@@ -76,7 +75,7 @@ export default function BusinessListItem({business, province}) {
 
                         <ul className="post-tags">
                             {
-                               categories && category && setCategoriesSelected().map(category => <li key={category?.id}>{category?.name}</li>)
+                              categories &&  categories.map(category => <li key={category?.id}>{category?.name}</li>)
                             }
                         </ul>
                     </div>

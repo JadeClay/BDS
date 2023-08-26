@@ -31,6 +31,18 @@ const Header = () => {
             </div>
             {/* End .logo-box */}
 
+            <nav className="nav main-menu">
+              <ul className="navigation" id="navbar">
+                {/* current dropdown */}
+                <li>
+                  <span onClick={() => router.push('/dashboard')}>Empresas</span>
+                </li>
+                <li>
+                  <span onClick={() => router.push('/dashboard/categories')}>Categorias</span>
+                </li>
+                {/* End Pages menu items */}
+              </ul>
+            </nav>
           </div>
           {/* End .nav-outer */}
 

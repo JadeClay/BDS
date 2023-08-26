@@ -1,12 +1,11 @@
-import MobileMenu from "../header/MobileMenuDashboard";
-import DashboardHeader from "../DashboardHeader";
-import BreadCrumb from "./BreadCrumb";
-import TopCardBlock from "./components/TopCardBlock";
-import JobListingsTable from "./components/JobListingsTable";
-import CopyrightFooter from "../footer/CopyrightFooter";
+import MobileMenu from "../../header/MobileMenuDashboard";
+import DashboardHeader from "../../DashboardHeader";
+import BreadCrumb from "../BreadCrumb";
+import CopyrightFooter from "../../footer/CopyrightFooter";
 import { useState } from "react";
 import swal from "sweetalert";
-import axios from "../../lib/axios";
+import axios from "../../../lib/axios";
+import CategoryListingsTable from "../components/CategoryListingsTable";
 
 // Setting the options for the Pop-up alerts
 const successAlertOptions = {
@@ -27,18 +26,6 @@ const Index = () => {
   // State used to trigger re-renderization when states changes in the table of businesses
   const [reload, setReload] = useState(0);
 
-  const createCategory = async () => {
-    const catName = await swal({
-      title: 'Ingrese el nombre de la categoría',
-      content: 'input',
-    }).then(value => value);
-    
-    const response = axios.post("/api/categories/new",{
-      name: catName
-    }).then(response => swal(successAlertOptions)).catch(error => swal(errorAlertOptions));
-      
-  }
-
   return (
     <div className="page-wrapper dashboard">
       <span className="header-span"></span>
@@ -57,20 +44,14 @@ const Index = () => {
           {/* breadCrumb */}
 
           <div className="row">
-            <TopCardBlock refresh={reload}/>
-          </div>
-          {/* End .row top card block */}
-
-          <div className="row">
             <div className="col-lg-12">
               {/* <!-- Ls widget --> */}
               <div className="ls-widget">
-                <JobListingsTable refreshPage={setReload} refresh={reload}/>
+                <CategoryListingsTable refreshPage={setReload} refresh={reload}/>
               </div>
             </div>
           </div>
           {/* End .row */}
-
         </div>
         {/* End dashboard-outer */}
       </section>

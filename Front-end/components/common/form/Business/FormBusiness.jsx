@@ -207,7 +207,7 @@ const FormBusiness = () => {
 
           {/* <!-- Search Select --> */}
           <div className="form-group col-lg-6 col-md-12">
-            <label>Categoria de Negocio (Puede seleccionar varias)*</label>
+            <label>Categoría de Negocio (Puede seleccionar varias)*</label>
             <Select
               isMulti
               name="categories"
@@ -236,13 +236,13 @@ const FormBusiness = () => {
 
           {/* <!-- Input --> */}
           <div className="form-group col-lg-5 col-md-12">
-            <label>Direccion *</label>
+            <label>Dirección *</label>
             <input type="text" name="direction" onChange={onDirectionChange} placeholder="Sector, Calle y número de edificio" required />
           </div>
 
           {/* <!-- Input --> */}
           <div className="form-group col-lg-4 col-md-12">
-            <label>Link Ubicacion *</label>
+            <label>Link Ubicación</label>
             <input type="text" name="location_link" onChange={onLocationLinkChange} placeholder="Link de la oficina en Google Maps" />
           </div>
 
@@ -254,7 +254,7 @@ const FormBusiness = () => {
 
           {/* <!-- Input --> */}
           <div className="form-group col-lg-6 col-md-12">
-            <label>Telefono *</label>
+            <label>Teléfono *</label>
             <input
               type="text"
               name="telephone"
@@ -272,11 +272,11 @@ const FormBusiness = () => {
 
           {/* <!-- Input --> */}
           <div className="form-group col-lg-6 col-md-12">
-            <label>Correo Electronico *</label>
+            <label>Correo Electrónico *</label>
             <input
               type="text"
               name="email"
-              placeholder="ejemplo@gmail.com"
+              placeholder="ejemplo@tuempresa.com"
               required
               onChange={onEmailChange}
             />
@@ -284,7 +284,7 @@ const FormBusiness = () => {
 
           {/* <!-- Input --> */}
           <div className="form-group col-lg-12 col-md-12">
-            <label>Pagina web</label>
+            <label>Página web</label>
             <input
               type="text"
               name="name"
