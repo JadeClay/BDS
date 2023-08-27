@@ -24,22 +24,24 @@ const errorAlertOptions = {
 const JobListingsTable = ({refreshPage, refresh}) => {
   const router = useRouter();
   const [page, setPage] = useState();
+  const [searching, setSearching] = useState(false);
+  const [searchText, setSearchText] = useState("");
   const [status, setStatus] = useState(0);
   const [provinces, setProvinces] = useState([]);
   const [provinceLoaded, setProvinceLoaded] = useState(false);
   const [token, setToken] = useState();
 
-  useEffect(() =>{
-    async function getData(){
-      // Retrieve the businesses
-      const res = await axios.get("/api/business/list/" + status).then(response => {
+  const getData = async () => {
+    // Retrieve the businesses
+    const res = await axios.get("/api/business/list/" + status).then(response => {
       setPage(response.data);
     }).catch(error => console.error(error));
-
+  
     const response = await axios.get("/api/provinces").then(response => {setProvinces(response.data); setProvinceLoaded(true)});
     setToken(Cookies.get('token'));
-    }
+  }
 
+  useEffect(() =>{
     getData(); 
   },[refresh]);
 
@@ -52,6 +54,11 @@ const JobListingsTable = ({refreshPage, refresh}) => {
   // Handles the pagination, goes changing the data
   const getPage = data => {
     axios.get(`/api/business/list/${status}?page=` + data.page).then(response => (setPage(response.data)))
+  }
+
+    // Handles the pagination, goes changing the data
+  const getSearchPage = data => {
+    axios.get(`/api/business/search/dashboard/${searchText}?page=` + data.page).then(response => (setPage(response.data)))
   }
 
   // Returns the name of the province of the business
@@ -81,19 +88,47 @@ const JobListingsTable = ({refreshPage, refresh}) => {
     }).then(() => swal(successAlertOptions)).catch(() => swal(errorAlertOptions))
   }
 
+  /* 
+    Business search
+  */
+
+  const onEnter = (e) => {
+    if(e.key == "Enter"){
+      console.log("SENT");
+    }
+  }
+  // TO-DO: Add another pagination for search business
+  const searchBusiness = async (e) => {
+    if(e.target.value == ""){
+      setSearching(false);
+      getData();
+    } else{
+      setSearchText(e.target.value);
+      setSearching(true);
+      await axios.get(`/api/business/search/dashboard/${e.target.value}`).then(response => setPage(response.data))
+    }
+  }
+
   return (
     <div className="tabs-box">
-      <div className="widget-title">
+      <div className="applicants-widget widget-title">
         <h4>Empresas</h4>
 
         <div className="chosen-outer">
+          <div className="search-box-one">
+            <div className="form-group">
+              <span className="icon flaticon-search-1">
+              </span>
+                <input type="text" name="search-business" id="search-business" required onChange={searchBusiness} onKeyDown={onEnter}/>
+            </div>
+          </div>
           {/* <!--Tabs Box--> */}
-          <select className="chosen-single form-select" onChange={statusFilter}>
-            <option value={0}>Pendientes</option>
-            <option value={1}>Aprobadas</option>
-            <option value={2}>Rechazadas</option>
-            <option value={3}>Todos</option>
-          </select>
+            <select className="chosen-single form-select chosen-container" onChange={statusFilter}>
+              <option value={0}>Pendientes</option>
+              <option value={1}>Aprobadas</option>
+              <option value={2}>Rechazadas</option>
+              <option value={3}>Todos</option>
+            </select>
         </div>
       </div>
       {/* End filter top bar */}
@@ -167,7 +202,9 @@ const JobListingsTable = ({refreshPage, refresh}) => {
             </tbody>
           </table>
         </div>
-        <Pagination buttonIcons={true} data={page} changePage={getPage}/>
+        {
+          searching ? <Pagination buttonIcons={true} data={page} changePage={getSearchPage}/> : <Pagination buttonIcons={true} data={page} changePage={getPage}/>
+        }
       </div>
       {/* End table widget content */}
     </div>

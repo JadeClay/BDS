@@ -3,8 +3,6 @@ import DashboardHeader from "../../DashboardHeader";
 import BreadCrumb from "../BreadCrumb";
 import CopyrightFooter from "../../footer/CopyrightFooter";
 import { useState } from "react";
-import swal from "sweetalert";
-import axios from "../../../lib/axios";
 import CategoryListingsTable from "../components/CategoryListingsTable";
 
 // Setting the options for the Pop-up alerts

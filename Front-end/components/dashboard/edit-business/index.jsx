@@ -20,9 +20,10 @@ import 'filepond/dist/filepond.min.css'
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 
 // Register the plugins
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview, FilePondPluginFileValidateType)
 
 // Setting the options for the Pop-up alerts
 const successAlertOptions = {
@@ -293,7 +294,7 @@ const Index = (id) => {
                         className="uploadButton-input"
                         type="file"
                         name="attachments[]"
-                        accept="image/*"
+                        accept=".png,.jpg,.jpeg"
                         id="upload"
                         onChange={onLogoChange}
                       />
@@ -442,7 +443,8 @@ const Index = (id) => {
                         maxFiles={3}
                         storeAsFile={true}
                         credits={false}
-                        labelIdle={"Cambiar las imágenes"}
+                        labelIdle={"Cambiar las imágenes (.png, .jpg, .jpeg)"}
+                        acceptedFileTypes={['image/png','image/jpeg']}
                       />
 
                       {/* <!-- Input --> */}

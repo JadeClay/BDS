@@ -183,6 +183,16 @@ Route::get('/business/search/{searchString}',function(Request $request, string $
 });
 
 /* 
+    SEARCH BUSINESS BY TEXT - DASHBOARD
+    Uses Laravel Scout to retrieve the businesses that contains the search string in their names or descriptions
+*/
+Route::get('/business/search/dashboard/{searchString}',function(Request $request, string $searchString){
+    
+    return Business::search($searchString)->paginate(5);
+    
+});
+
+/* 
     MANAGEMENT OF BUSINESS 
     Endpoints to edit, and manage the businesses created in the database
 */

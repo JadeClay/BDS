@@ -21,7 +21,7 @@ const GalleryBox = () => {
   return (
     <>
       <Gallery>
-        {images && images.map((singleItem) => (
+        {images && images?.map((singleItem) => (
           <div className="col-lg-3 col-md-3 col-sm-6" key={1}>
             <figure className="image" role="button">
               <Item

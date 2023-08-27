@@ -9,17 +9,23 @@ export default function Profile() {
     const [business, setBusiness] = useState();
     const [categories, setCategories] = useState();
     const [provinces, setProvinces] = useState();
-    const id = router.query.id;
   
     useEffect(() => {
+      const id = router.query.id;
       async function getData() {
         const businessResponse = await axios.get(`/api/business/${id}`).then(response => setBusiness(response.data)).catch(error => console.error(error));
         const provincesResponse = await axios.get(`/api/provinces`).then(response => setProvinces(response.data)).catch(error => console.error(error));
         const categoriesResponse = await axios.get(`/api/business/category/${id}`).then(response => setCategories(response.data)).catch(error => console.error(error));
       }
-      getData();
-    }, [id]);
-  
+      if(router.isReady){
+        getData();
+      }
+    }, [router.isReady]);
+    
+    const share = () => {
+
+    }
+
     // Getting the name of the province of the business
     const getProvince = (id) => {
       const province = provinces[id-1];
@@ -27,129 +33,144 @@ export default function Profile() {
     }
 
   return (
-    <section className="candidate-detail-section">
-        <div className="upper-box">
-          <div className="auto-container">
-            <div className="candidate-block-five">
-              <div className="inner-box">
-                <div className="content">
-                  <figure className="image">
-                    <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${business?.logo}`} alt="avatar" />
-                  </figure>
-                  <h4 className="name">{business?.name}</h4>
-
-                  <ul className="candidate-info">
-                    <li>
-                      <span className="icon flaticon-map-locator"></span>
-                      {provinces && getProvince(business?.province_id)}
-                    </li>
-                  </ul>
-
-                  <ul className="post-tags">
-                    {categories && categories.map(category => <li key={category?.id}>{category?.name}</li>)}
-                  </ul>
-                </div>
-
-                <div className="btn-box">
-                  <a
-                    className="theme-btn btn-style-one"
-                    href={business?.website}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Ir a la página web
-                  </a>
-                </div>
-              </div>
-            </div>
-            {/*  <!-- Candidate block Five --> */}
-          </div>
-        </div>
-        {/* <!-- Upper Box --> */}
-
-        <div className="candidate-detail-outer">
-          <div className="auto-container">
-            <div className="row">
-
-            <div className="sidebar-column col-lg-4 col-md-12 col-sm-12">
-                <aside className="sidebar">
-                  <div className="sidebar-widget">
-                    <div className="widget-content">
-                      <ul className="job-overview">
+    <>
+      {
+        router.isReady && (
+          <section className="candidate-detail-section">
+            <div className="upper-box">
+              <div className="auto-container">
+                <div className="candidate-block-five">
+                  <div className="inner-box">
+                    <div className="content">
+                      <figure className="image">
+                        <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${business?.logo}`} alt="avatar" />
+                      </figure>
+                      <h4 className="name">{business?.name}</h4>
+    
+                      <ul className="candidate-info">
                         <li>
-                          <i className="icon fa fa-briefcase"></i>
-                          <h5>Encargado:</h5>
-                          <span>{business?.owner}</span>
-                        </li>
-
-                        <li>
-                          <i className="icon fa fa-map-marked"></i>
-                          <h5>Dirección:</h5>
-                          <span>{business?.direction}</span>
-                        </li>
-
-                        <li>
-                          <i className="icon fa fa-phone"></i>
-                          <h5>Teléfono:</h5>
-                          <span>{business?.telephone}</span>
-                          <h5>Celular:</h5>
-                          <span>{business?.cellphone}</span>
-                        </li>
-
-                        <li>
-                          <i className="icon fa fa-mail-bulk"></i>
-                          <h5>Correo Electrónico:</h5>
-                          <span>{business?.email}</span>
-                        </li>
-
-                        <li>
-                          <i className="icon fa fa-globe"></i>
-                          <a href={business?.website} target="_blank" rel="noreferrer"><h5>Ir a la página web</h5></a>
+                          <span className="icon flaticon-map-locator"></span>
+                          {provinces && getProvince(business?.province_id)}
                         </li>
                       </ul>
+    
+                      <ul className="post-tags">
+                        {categories && categories.map(category => <li key={category?.id}>{category?.name}</li>)}
+                      </ul>
                     </div>
+                    
+                    
+                    <div className="btn-box">
+                      { business?.website && (
+                        <a
+                          className="theme-btn btn-style-one"
+                          href={business?.website}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Ir a la página web
+                        </a>
+                      )
+                      }
+                      <a className="bookmark-btn" href={`whatsapp://send?text=https://marketplace.sae.com.do/business/profile?id=${business?.id}`} data-action="share/whatsapp/share" target="_blank" rel="noreferrer">
+                        <i className="flaticon-share"></i>
+                      </a>
+                    </div>
+                      
                   </div>
-                  {/* End .sidebar-widget conadidate overview */}
-
-                  <div className="sidebar-widget social-media-widget">
-                    <h4 className="widget-title">Redes Sociales</h4>
-                    <div className="widget-content">
-                      <div className="social-links">
-                        <Social facebook={business?.facebook} instagram={business?.instagram}/>
+                </div>
+                {/*  <!-- Candidate block Five --> */}
+              </div>
+            </div>
+            {/* <!-- Upper Box --> */}
+    
+            <div className="candidate-detail-outer">
+              <div className="auto-container">
+                <div className="row">
+    
+                <div className="sidebar-column col-lg-4 col-md-12 col-sm-12">
+                    <aside className="sidebar">
+                      <div className="sidebar-widget">
+                        <div className="widget-content">
+                          <ul className="job-overview">
+                            <li>
+                              <i className="icon fa fa-briefcase"></i>
+                              <h5>Encargado:</h5>
+                              <span>{business?.owner}</span>
+                            </li>
+    
+                            <li>
+                              <i className="icon fa fa-map-marked"></i>
+                              <h5>Dirección:</h5>
+                              <span>{business?.direction}</span>
+                            </li>
+    
+                            <li>
+                              <i className="icon fa fa-phone"></i>
+                              <h5>Teléfono:</h5>
+                              <span>{business?.telephone}</span>
+                              <h5>Celular:</h5>
+                              <span>{business?.cellphone}</span>
+                            </li>
+    
+                            <li>
+                              <i className="icon fa fa-mail-bulk"></i>
+                              <h5>Correo Electrónico:</h5>
+                              <span>{business?.email}</span>
+                            </li>
+                            { business?.website && (
+                            <li>
+                              <i className="icon fa fa-globe"></i>
+                              <a href={business?.website} target="_blank" rel="noreferrer"><h5>Ir a la página web</h5></a>
+                            </li>
+                            )}
+                          </ul>
+                        </div>
+                      </div>
+                      {/* End .sidebar-widget conadidate overview */}
+    
+                      <div className="sidebar-widget social-media-widget">
+                        <h4 className="widget-title">Redes Sociales</h4>
+                        <div className="widget-content">
+                          <div className="social-links">
+                            <Social facebook={business?.facebook} instagram={business?.instagram}/>
+                          </div>
+                        </div>
+                      </div>
+                      {/* End .sidebar-widget social-media-widget */}
+    
+                    </aside>
+                    {/* End .sidebar */}
+                  </div>
+                  {/* End .sidebar-column */}
+    
+                  <div className="content-column col-lg-8 col-md-12 col-sm-12">
+                    <div className="job-detail">
+                        <h4>Sobre la empresa</h4>
+    
+                      <p style={{whiteSpace: "normal", textAlign: "justify"}}>
+                        {business?.description}
+                      </p>
+    
+                      {/* <!-- Portfolio --> */}
+                      <div className="portfolio-outer">
+                        <div className="row">
+                          <GalleryBox id={business?.id} />
+                        </div>
                       </div>
                     </div>
                   </div>
-                  {/* End .sidebar-widget social-media-widget */}
-
-                </aside>
-                {/* End .sidebar */}
-              </div>
-              {/* End .sidebar-column */}
-
-              <div className="content-column col-lg-8 col-md-12 col-sm-12">
-                <div className="job-detail">
-                    <h4>Sobre la empresa</h4>
-
-                  <p style={{whiteSpace: "normal", textAlign: "justify"}}>
-                    {business?.description}
-                  </p>
-
-                  {/* <!-- Portfolio --> */}
-                  <div className="portfolio-outer">
-                    <div className="row">
-                      <GalleryBox id={business?.id} />
-                    </div>
-                  </div>
+                  {/* End .content-column */}
+    
                 </div>
+    
+                
               </div>
-              {/* End .content-column */}
-
             </div>
-
-            
-          </div>
-        </div>
-        {/* <!-- job-detail-outer--> */}
-      </section>
+            {/* <!-- job-detail-outer--> */}
+          </section>
+        )
+      }
+    </>
   )
 }
