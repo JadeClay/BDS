@@ -21,7 +21,7 @@ return new class extends Migration
             Change the word inside HASH to set the corresponding password of the user.
         */
         DB::table('users')->insert([
-            ['name' => 'root','username' => 'root', 'password' => Hash::make('root')],
+            ['name' => 'root','username' => 'root', 'password' => Hash::make('change this')],
         ]);
     }
 
